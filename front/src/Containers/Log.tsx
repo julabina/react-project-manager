@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 const Log = () => {
 
+    const signErrorCont = document.querySelector(".log__signin__errorCont");
+    const logErrorCont = document.querySelector(".log__login__errorCont");  
+
     type SignInput = {username: string, firstname: string, lastname: string, mail: string, confirmMail: string, password: string, confirmPassword: string, aggree: boolean};
     type LogInput = {mail: string, password: string};
 
@@ -11,15 +14,14 @@ const Log = () => {
     const verifyLog = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const errorCont = document.querySelector(".log__login__errorCont");  
-        if (errorCont) {    
-            errorCont.innerHTML = "";
+        if (logErrorCont) {    
+            logErrorCont.innerHTML = "";
         }
         let errors: string = "";
         
         if (logInput.mail === '' || logInput.password === '') {
-            if (errorCont) {   
-                return errorCont.innerHTML = `<p>- Tous les champs sont requis.</p>`;
+            if (logErrorCont) {   
+                return logErrorCont.innerHTML = `<p>- Tous les champs sont requis.</p>`;
             }
         }
 
@@ -31,8 +33,8 @@ const Log = () => {
         }
 
         if (errors !== "") {
-            if (errorCont) {
-                return errorCont.innerHTML = errors;
+            if (logErrorCont) {
+                return logErrorCont.innerHTML = errors;
             }
         }
 
@@ -41,16 +43,15 @@ const Log = () => {
 
     const verifySign = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
-        const errorCont = document.querySelector(".log__signin__errorCont");  
-        if (errorCont) {    
-            errorCont.innerHTML = "";
+          
+        if (signErrorCont) {    
+            signErrorCont.innerHTML = "";
         }
         let errors: string = "";
         
         if (signInput.username === '' || signInput.firstname === '' || signInput.lastname === '' || signInput.mail === '' || signInput.confirmMail === '' || signInput.password === '' || signInput.confirmPassword === '') {
-            if (errorCont) {   
-                return errorCont.innerHTML = `<p>- Tous les champs sont requis.</p>`;
+            if (signErrorCont) {   
+                return signErrorCont.innerHTML = `<p>- Tous les champs sont requis.</p>`;
             }
         }
         
@@ -88,8 +89,8 @@ const Log = () => {
         }
 
         if (errors !== "") {
-            if (errorCont) {
-                return errorCont.innerHTML = errors;
+            if (signErrorCont) {
+                return signErrorCont.innerHTML = errors;
             }
         }
 
@@ -164,8 +165,22 @@ const Log = () => {
         }
     };
 
-    const tryToSign = () => {
-        
+    const tryToSign = () => {       
+        fetch(process.env.REACT_APP_API_URL + '/api/users/sign', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ mail: signInput.mail, password: signInput.password, firstname: signInput.firstname, lastname: signInput.lastname, username: signInput.username })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);                
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     const tryToLog = () => {

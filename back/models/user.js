@@ -32,12 +32,12 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         projects: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         }
     },{
         timestamps: true,
-        createdAt: 'created',
-        updatedAt: 'updated'
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
     });
 };
