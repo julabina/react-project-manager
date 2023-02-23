@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { decodeToken, isExpired } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
+import Header from '../Components/Header';
 
 const Home = () => {
 
@@ -9,6 +10,8 @@ const Home = () => {
     type StoredToken = {version: string, content: string};
     type Token = {version: string, content: string};
     type DecodedToken = {userId: string, token: Token};
+
+    const [userInfo, setUserInfo] = useState();
 
     useEffect(() => {
         if (localStorage.getItem('react_project_manager_token') !== null) {
@@ -25,7 +28,8 @@ const Home = () => {
                 /* const newUserObj = {
                     token: token.version,
                     id: decodedToken.userId,
-                }; */
+                }; */                
+                getUserHomeInfos(decodedToken.userId, token.version);
             } else {
                 // DISCONNECT
                 localStorage.removeItem('react_project_manager_token');
@@ -37,10 +41,26 @@ const Home = () => {
         }; 
     },[]);
 
+    const getUserHomeInfos = (id: string, token: string) => {
+        fetch(process.env.REACT_APP_API_URL + '/api/users/getHomeUserInfo/' + id, {
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            method: 'GET'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+    };
+
     return (
-        <div>
+        <>
+        <Header />
+        <main>
             
-        </div>
+        </main>
+        </>
     );
 };
 

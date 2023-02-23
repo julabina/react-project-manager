@@ -128,7 +128,6 @@ exports.sign = (req, res, next) => {
  * @param {*} next 
  */
 exports.log = (req, res, next) => {
-    console.log(req.body);
 
     if (req.body.mail === undefined || req.body.password === undefined) {
         const message = "Toutes les informations n'ont pas été envoyées.";
@@ -170,4 +169,65 @@ exports.log = (req, res, next) => {
         res.status(400).json({ message });
     }
 
+};
+
+exports.getUserInfo = (req, res, next) => {
+    let data;
+
+    User.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            if (user === null) {
+                const message = "Aucun utilisateur trouvé.";
+                return res.status(404).json({ message });
+            }
+            
+            UserInfo.findOne({ where: { userId: req.params.id } })
+            .then(userInfo => {
+                if (userInfo === null) {
+                        const message = "Aucun utilisateur trouvé.";
+                        return res.status(404).json({ message });
+                    }
+
+                    data = {
+                        id: user.id,
+                        username: userInfo.username,
+                        firstname: userInfo.firstname,
+                        lastname: userInfo.lastname,
+                    };
+
+                    const message = "Un utilisateur à bien été trouvé.";
+                    res.status(200).json({ message, data });
+                })
+        })
+        .catch(err => res.status(500).json({ message: err }))
+};
+
+exports.getHomeUserInfo = (req, res, next) => {
+    let data;
+
+    User.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            if (user === null) {
+                const message = "Aucun utilisateur trouvé.";
+                return res.status(404).json({ message });
+            }
+            
+            UserInfo.findOne({ where: { userId: req.params.id } })
+            .then(userInfo => {
+                if (userInfo === null) {
+                        const message = "Aucun utilisateur trouvé.";
+                        return res.status(404).json({ message });
+                    }
+
+                    data = {
+                        id: user.id,
+                        projects: user.projects,
+                        username: userInfo.username
+                    };
+
+                    const message = "Un utilisateur à bien été trouvé.";
+                    res.status(200).json({ message, data });
+                })
+        })
+        .catch(err => res.status(500).json({ message: err }))
 };

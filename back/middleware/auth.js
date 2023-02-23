@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../db/sequelize');
 
 module.exports = (req, res, next) => {
+    console.log("1");
 
     try {
         const token = req.headers.authorization.split(' ')[1];
@@ -10,10 +11,8 @@ module.exports = (req, res, next) => {
 
         User.findByPk(userId)
             .then(user => {
-
-                const admin = user.isAdmin;
                 
-                req.auth = { userId : userId, isAdmin: admin };
+                req.auth = { userId : userId };
                 
                 if(req.body.userId && req.body.userId !== userId) {
                     throw 'User id non valable.';
