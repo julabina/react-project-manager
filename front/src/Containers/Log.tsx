@@ -8,12 +8,92 @@ const Log = () => {
     const [signInput, setSignInput] = useState<SignInput>({username: "", firstname: "", lastname: "", mail: "", confirmMail: "", password: "", confirmPassword: "", aggree: false});
     const [logInput, setLogInput] = useState<LogInput>({mail: "", password: ""});
 
-    const verifyLog = () => {
+    const verifyLog = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        const errorCont = document.querySelector(".log__login__errorCont");  
+        if (errorCont) {    
+            errorCont.innerHTML = "";
+        }
+        let errors: string = "";
+        
+        if (logInput.mail === '' || logInput.password === '') {
+            if (errorCont) {   
+                return errorCont.innerHTML = `<p>- Tous les champs sont requis.</p>`;
+            }
+        }
+
+        if (!logInput.mail.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i)) {
+            errors = `<p>- L'email n'a pas un format valide.</p>`;
+        }
+        if (!logInput.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)) {
+            errors += `<p>- Le mot de passe doit contenir minimun 1 lettre 1 chiffre 1 lettre majuscule et 8 caractères.</p>`;
+        }
+
+        if (errors !== "") {
+            if (errorCont) {
+                return errorCont.innerHTML = errors;
+            }
+        }
+
+        tryToLog();
     };
 
-    const verifySign = () => {
+    const verifySign = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+        const errorCont = document.querySelector(".log__signin__errorCont");  
+        if (errorCont) {    
+            errorCont.innerHTML = "";
+        }
+        let errors: string = "";
+        
+        if (signInput.username === '' || signInput.firstname === '' || signInput.lastname === '' || signInput.mail === '' || signInput.confirmMail === '' || signInput.password === '' || signInput.confirmPassword === '') {
+            if (errorCont) {   
+                return errorCont.innerHTML = `<p>- Tous les champs sont requis.</p>`;
+            }
+        }
+        
+        if (signInput.aggree === false) {
+            errors = `<p>- Veuillez accepter les CGU.</p>`;
+        }
+        if (!signInput.mail.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i) || !signInput.confirmMail.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i)) {
+            errors += `<p>- L'email n'a pas un format valide.</p>`;
+        }
+        if (!signInput.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/) || !signInput.confirmPassword.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)) {
+            errors += `<p>- Le mot de passe doit contenir minimun 1 lettre 1 chiffre 1 lettre majuscule et 8 caractères.</p>`;
+        }
 
+        if (signInput.username.length < 2 || signInput.username.length > 26) {
+            errors += `<p>- Le nom d'utilisateur doit comprendre entre 2 et 25 caractères.</p>`;
+        } else if (!signInput.username.match(/^[\w éèàêïëîâà\-]*$/i)) {
+            errors += `<p>- Le nom d'utilisateur ne doit comporter que des lettres et des chiffres.</p>`;
+        }
+        if (signInput.firstname.length < 2 || signInput.firstname.length > 26) {
+            errors += `<p>- Le prénom doit comprendre entre 2 et 25 caractères.</p>`;
+        } else if (!signInput.firstname.match(/^[a-zA-Z éèàêïëîâà\-]*$/i)) {
+            errors += `<p>- Le prénom ne doit comporter que des lettres.</p>`;
+        }
+        if (signInput.lastname.length < 2 || signInput.lastname.length > 26) {
+            errors += `<p>- Le nom doit comprendre entre 2 et 25 caractères.</p>`;
+        } else if (!signInput.lastname.match(/^[a-zA-Z éèàêïëîâà\-]*$/i)) {
+            errors += `<p>- Le nom ne doit comporter que des lettres.</p>`;
+        }
+        
+        if (signInput.mail !== signInput.confirmMail) {
+            errors += `<p>- Le emails ne correspondent pas.</p>`;
+        }
+        if (signInput.password !== signInput.confirmPassword) {
+            errors += `<p>- Les mots de passe ne correspondent pas.</p>`;
+        }
+
+        if (errors !== "") {
+            if (errorCont) {
+                return errorCont.innerHTML = errors;
+            }
+        }
+
+        tryToSign();
     };
 
     const logControl = (action: string, value: string) => {
@@ -84,12 +164,21 @@ const Log = () => {
         }
     };
 
+    const tryToSign = () => {
+        
+    };
+
+    const tryToLog = () => {
+
+    };
+
     return (
         <>
             <main className='log'>
                 <section className='log__login'>
                     <h2>Se connecter</h2>
-                    <form className='log__login__form'>
+                    <div className="log__login__errorCont"></div>
+                    <form className='log__login__form' onSubmit={verifyLog}>
                         <div className="log__login__form__inputCont">
                             <label htmlFor="logEmail">Email</label>
                             <input onInput={(e) => logControl('mail', (e.target as HTMLInputElement).value)} value={logInput.mail} type="email" id="logEmail" placeholder='user@gmail.com' />
@@ -100,13 +189,14 @@ const Log = () => {
                         </div>
                         <p className='log__form__resetPassword'>Mot de passe oublié</p>
                         <div className="log__login__form__btnCont">
-                            <button onClick={verifyLog}>Connexion</button>
+                            <input type="submit" value="Connexion" />
                         </div>
                     </form>
                 </section>
                 <section className='log__signin'>
                     <h2>S'inscrire</h2>
-                    <form className='log__signin__form'>
+                    <div className="log__signin__errorCont"></div>
+                    <form className='log__signin__form' onSubmit={verifySign}>
                         <div className="log__signin__form__inputCont">
                             <label htmlFor="signUsername">Pseudo</label>
                             <input onInput={(e) => signControl('username', (e.target as HTMLInputElement).value)} value={signInput.username} type="text" id="signUsername" placeholder='user10400' />
@@ -140,7 +230,7 @@ const Log = () => {
                             <label htmlFor="signCheck">Je blablabla</label>
                         </div>
                         <div className="log__signin__form__btnCont">
-                            <button onClick={verifySign}>Inscription</button>
+                            <input type="submit" value="Inscription" />
                         </div>
                     </form>
                 </section>
