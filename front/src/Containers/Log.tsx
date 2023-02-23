@@ -1,15 +1,44 @@
-import React, { useState } from 'react';
+import { sign } from 'crypto';
+import React, { useState, useEffect } from 'react';
+import { decodeToken, isExpired } from 'react-jwt';
+import { useNavigate } from 'react-router-dom';
 
 const Log = () => {
+
+    const navigate = useNavigate();
 
     const signErrorCont = document.querySelector(".log__signin__errorCont");
     const logErrorCont = document.querySelector(".log__login__errorCont");  
 
     type SignInput = {username: string, firstname: string, lastname: string, mail: string, confirmMail: string, password: string, confirmPassword: string, aggree: boolean};
     type LogInput = {mail: string, password: string};
+    type StoredToken = {version: string, content: string};
+    type Token = {version: string, content: string};
+    type DecodedToken = {userId: string, token: Token};
 
     const [signInput, setSignInput] = useState<SignInput>({username: "", firstname: "", lastname: "", mail: "", confirmMail: "", password: "", confirmPassword: "", aggree: false});
     const [logInput, setLogInput] = useState<LogInput>({mail: "", password: ""});
+    const [isLogged, setIsLogged] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('react_project_manager_token') !== null) {
+            let getToken = localStorage.getItem('react_project_manager_token') || "";
+            let token: StoredToken = JSON.parse(getToken);
+            if (token !== null) {
+                let decodedToken: DecodedToken = decodeToken(token.version) || {userId: "",token: {version: "", content: ""}};
+                let isTokenExpired = isExpired(token.version);
+                if (decodedToken.userId !== token.content || isTokenExpired === true) {
+                    // DISCONNECT
+                    localStorage.removeItem('react_project_manager_token');
+                    return navigate('/connexion', { replace: true });
+                };
+                setIsLogged(true);
+            } else {
+                // DISCONNECT
+                localStorage.removeItem('react_project_manager_token');
+            };
+        }
+    },[]);
 
     const verifyLog = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -174,21 +203,75 @@ const Log = () => {
             method: 'POST',
             body: JSON.stringify({ mail: signInput.mail, password: signInput.password, firstname: signInput.firstname, lastname: signInput.lastname, username: signInput.username })
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);                
+            .then(res => {
+                if (res.status === 201) {
+                    tryToLog(signInput.mail, signInput.password);
+                } else {
+                    res.json()
+                        .then(data => {
+                            if (signErrorCont) {
+                                signErrorCont.innerHTML = `` + data.message + ``;
+                            }
+                        })
+                }
             })
-            .catch(err => {
-                console.log(err);
-            });
     };
 
-    const tryToLog = () => {
+    const tryToLog = (mail?: string, password?: string) => {
 
+        if (mail === undefined || password === undefined) {
+            mail = logInput.mail;
+            password = logInput.password;
+        }
+
+        fetch(process.env.REACT_APP_API_URL + '/api/users/log', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ mail, password})
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    
+                    res.json()
+                        .then(data => {
+                            let newObj = {
+                                version: data.token,
+                                content: data.userId
+                            };
+                            localStorage.setItem('react_project_manager_token', JSON.stringify(newObj)); 
+                            navigate('/', { replace: true });
+                        })
+                    
+                } else {
+                    res.json()
+                        .then(data => {
+                            if (logErrorCont) {   
+                                logErrorCont.innerHTML = `<p>- ` + data.message + `</p>`
+                            }
+                        })
+                }
+            })   
+    };
+
+    const disconnect = () => {       
+        if (localStorage.getItem('react_project_manager_token') !== null) {
+            localStorage.removeItem('react_project_manager_token');
+            setIsLogged(false);
+        }
     };
 
     return (
         <>
+        {isLogged ? 
+            <main>
+                <section>
+                    <button onClick={disconnect}>Se deconnecter</button>
+                </section>
+            </main>
+        : 
             <main className='log'>
                 <section className='log__login'>
                     <h2>Se connecter</h2>
@@ -250,6 +333,7 @@ const Log = () => {
                     </form>
                 </section>
             </main>
+        }
         </>
     );
 };

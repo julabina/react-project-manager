@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: { msg: "Le pseudo ne doit pas être vide." },
                 len: { args: [2, 25], msg: "Le pseudo doit etre compris entre 2 et 25 caractères." },
-                is: {args: /^[a-zA-Zé èà]*$/i, msg: "le pseudo ne doit contenir que des lettres"}
+                is: {args: /^[\w éèàêïëîâà\-]*$/i, msg: "le pseudo ne doit contenir que des lettres"}
             }
         },
         firstname: {
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: { msg: "Le prénom ne doit pas être vide." },
                 len: { args: [2, 25], msg: "Le prénom doit etre compris entre 2 et 25 caractères." },
-                is: {args: /^[a-zA-Zé èà]*$/i, msg: "le prénom ne doit contenir que des lettres"}
+                is: {args: /^[a-zA-Z éèàêïëîâà\-]*$/i, msg: "le prénom ne doit contenir que des lettres"}
             }
         },
         lastname: {
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: { msg: "Le nom ne doit pas être vide." },
                 len: { args: [2, 25], msg: "Le nom doit etre compris entre 2 et 25 caractères." },
-                is: {args: /^[a-zA-Zé èà]*$/i, msg: "le nom ne doit contenir que des lettres"}
+                is: {args: /^[a-zA-Z éèàêïëîâà\-]*$/i, msg: "le nom ne doit contenir que des lettres"}
             }
         },
     },{
