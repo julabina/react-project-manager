@@ -10,8 +10,10 @@ const Home = () => {
     type StoredToken = {version: string, content: string};
     type Token = {version: string, content: string};
     type DecodedToken = {userId: string, token: Token};
+    type UserInfo = {id: string, username: string};
 
-    const [userInfo, setUserInfo] = useState();
+    const [userInfo, setUserInfo] = useState<UserInfo>({id: "", username: ""});
+    const [projects, setProjects] = useState<string[]>([]);
 
     useEffect(() => {
         if (localStorage.getItem('react_project_manager_token') !== null) {
@@ -25,10 +27,7 @@ const Home = () => {
                     localStorage.removeItem('react_project_manager_token');
                     return navigate('/connexion', { replace: true });
                 };
-                /* const newUserObj = {
-                    token: token.version,
-                    id: decodedToken.userId,
-                }; */                
+              
                 getUserHomeInfos(decodedToken.userId, token.version);
             } else {
                 // DISCONNECT
@@ -42,6 +41,7 @@ const Home = () => {
     },[]);
 
     const getUserHomeInfos = (id: string, token: string) => {
+
         fetch(process.env.REACT_APP_API_URL + '/api/users/getHomeUserInfo/' + id, {
             headers: {
                 "Authorization": "Bearer " + token
@@ -50,7 +50,16 @@ const Home = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                const newObj: UserInfo = {
+                    id: data.data.id,
+                    username: data.data.username,
+                }
+
+                if (data.data.projects !== "") {
+                    
+                }
+
+                setUserInfo(newObj);
             })
     };
 
@@ -58,7 +67,17 @@ const Home = () => {
         <>
         <Header />
         <main>
-            
+            <h1>page d'accueil de {userInfo.username}</h1>
+            <h2>Mes projets</h2>
+            <a href="#">Nouveau projet</a>
+            {
+                projects?.length > 0 ?
+                projects.map(el => {
+                    return el;
+                })
+                : 
+                <h3>Aucun projets.</h3>
+            }
         </main>
         </>
     );
