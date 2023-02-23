@@ -183,7 +183,8 @@ exports.getUserInfo = (req, res, next) => {
             
             UserInfo.findOne({ where: { userId: req.params.id } })
             .then(userInfo => {
-                if (userInfo === null) {
+                    console.log(userInfo);
+                    if (userInfo === null) {
                         const message = "Aucun utilisateur trouvé.";
                         return res.status(404).json({ message });
                     }

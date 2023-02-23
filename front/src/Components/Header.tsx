@@ -15,7 +15,7 @@ const Header = () => {
     return (
         <header className='header'>
             <h1>TITRE</h1>
-            <Menu id={id} />
+            <Menu />
         </header>
     );
 };
