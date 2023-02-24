@@ -30,7 +30,7 @@ exports.createProject = (req, res, next) => {
                 project.save()
                     .then(() => {
                         const message = "Projet bien créé.";
-                        res.status(201).json({ message });
+                        res.status(201).json({ message, id });
                     })
                     .catch(error => {
                         if (error instanceof ValidationError) {
@@ -44,4 +44,18 @@ exports.createProject = (req, res, next) => {
             })
             .catch(error => res.status(500).json({ message: error }));
     }
+};
+
+exports.getInfos = (req, res, next) => {
+    Project.findOne({where: {id: req.params.id}})
+        .then(project => {
+            if (project === null) {
+                const message = "Aucun projet trouvé.";
+                return res.status(404).json({ message });
+            }
+
+            const message = 'Un projet a bien été trouvé.';
+            res.status(200).json({ message, data: project })
+        })
+        .catch(error => res.status(500).json({ message: error }));
 };

@@ -112,6 +112,21 @@ const NewProject = () => {
                 userId: userInfo.userId, 
             })
         })
+            .then(res => {
+                if (res.status === 201) {
+                    res.json()
+                        .then(data => {
+                            navigate('/project/' + data.id, { replace: true });
+                        })
+                } else {
+                    res.json()
+                        .then(data => {
+                            if (errorCont) {
+                                errorCont.innerHTML = `<p>- ` + data.message + `</p>`;
+                            }
+                        })
+                }
+            })
     };
 
     return (
