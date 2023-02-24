@@ -14,8 +14,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
                 notEmpty: { msg: "Le titre ne doit pas être vide." },
-                len: { args: [2, 25], msg: "Le titre doit etre compris entre 2 et 25 caractères." },
-                is: {args: /^[\wé èà\-]*$/i, msg: "le titre ne doit contenir que des lettres"}
+                len: { args: [2, 100], msg: "Le titre doit etre compris entre 2 et 25 caractères." },
+                is: {args: /^[\wé èà\-]*$/i, msg: "le titre ne doit contenir que des lettres et des chiffres"}
+            }
+        },
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            validate: {
+                len: { args: [0, 400], msg: "La description ne doit pas dépasser 400 caractères." },
+                is: {args: /^[\wé èà\-,.]*$/im, msg: "la description ne doit pas contenir de caractères spéciaux."}
             }
         },
         creator: {
@@ -27,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         colaborators: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
     },{

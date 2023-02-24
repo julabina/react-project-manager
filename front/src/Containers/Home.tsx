@@ -69,7 +69,7 @@ const Home = () => {
         <main>
             <h1>page d'accueil de {userInfo.username}</h1>
             <h2>Mes projets</h2>
-            <a href="#">Nouveau projet</a>
+            <a href="/new">Nouveau projet</a>
             {
                 projects?.length > 0 ?
                 projects.map(el => {

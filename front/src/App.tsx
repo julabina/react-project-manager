@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./Containers/Home";
 import Log from "./Containers/Log";
+import NewProject from "./Containers/NewProject";
 import NotFound from "./Containers/NotFound";
 import Profil from "./Containers/Profil";
 import Project from "./Containers/Project";
@@ -15,6 +16,7 @@ function App() {
           <Route path=":id" element={<Profil />} />
       </Route>
       <Route path="/connexion" element={<Log />} />
+      <Route path="/new" element={<NewProject />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );
