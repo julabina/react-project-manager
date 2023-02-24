@@ -66,8 +66,13 @@ const Project = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                const newObj: ProjectInfos = {
+                    title: data.data.title ,
+                    description: data.data.description ,
+                    colaborators: data.data.colaborators 
+                };
                 
+                setProjectInfos(newObj);
             })
     };
 
