@@ -1,3 +1,22 @@
-
+.projectCard {
+  border: 1px solid black;
+  width: 200px;
+  height: 200px;
+}
+.projectCard__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.767);
+}
+.projectCard__modal__container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+}
 
 /*# sourceMappingURL=style.css.map */

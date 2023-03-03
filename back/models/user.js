@@ -33,7 +33,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         projects: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true,
+            get() {
+                return this.getDataValue('projects').split(',')
+            },
+            set(projects) {
+                this.setDataValue('projects', projects.join())
+            }
         }
     },{
         timestamps: true,

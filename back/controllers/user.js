@@ -32,7 +32,7 @@ exports.sign = (req, res, next) => {
                             id: userId,
                             email: req.body.mail,
                             password: hash,
-                            projects: ""
+                            projects: [""]
                         });
                         user.save()
                             .then(() => {

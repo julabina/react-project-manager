@@ -25,12 +25,35 @@ exports.createProject = (req, res, next) => {
                     title: req.body.title,
                     description: req.body.description,
                     creator: req.body.userId,
-                    colaborators: ""
+                    colaborators: [""]
                 });
                 project.save()
                     .then(() => {
-                        const message = "Projet bien créé.";
-                        res.status(201).json({ message, id });
+
+                        let userProjects = user.projects;
+
+                        if (userProjects.length === 1 && userProjects[0] === "") {
+                            userProjects = [id];
+                        } else {
+                            userProjects.push(id);
+                        }
+
+                        user.projects = userProjects;
+
+                        user.save()
+                            .then(() => {
+                                const message = "Projet bien créé.";
+                                res.status(201).json({ message, id });
+                            })
+                            .catch(error => { 
+                                project.destroy({where: { id: id }})
+                                    .then(() => {
+                                        res.status(500).json({ message: error });
+                                    })
+                                    .catch(error => res.status(500).json({ message: error }));
+
+                            });
+
                     })
                     .catch(error => {
                         if (error instanceof ValidationError) {
@@ -46,7 +69,7 @@ exports.createProject = (req, res, next) => {
     }
 };
 
-exports.getInfos = (req, res, next) => {
+exports.getProject = (req, res, next) => {
     Project.findOne({where: {id: req.params.id}})
         .then(project => {
             if (project === null) {
@@ -58,4 +81,28 @@ exports.getInfos = (req, res, next) => {
             res.status(200).json({ message, data: project })
         })
         .catch(error => res.status(500).json({ message: error }));
+};
+
+exports.getProjects = (req, res, next) => {
+
+    Project.findAll({where: {id: req.body.projectsId}})
+        .then(projects => {
+
+            if (projects.length === 0) {
+                const message = "Aucun projets trouvés.";
+                return res.status(404).json({ message });
+            }
+
+            let message = "";
+
+            if (projects.length === 1) {
+                message = 'Un projet a bien été trouvé.'
+            } else {
+                message = 'Des projets ont bien été trouvés.'
+            }
+
+            res.status(200).json({message, data: projects})
+        })
+        .catch(error => res.status(500).json({ message: error }));
+
 };

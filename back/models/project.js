@@ -36,7 +36,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         colaborators: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
+            get() {
+                return this.getDataValue('colaborators').split(',')
+            },
+            set(colaborators) {
+                this.setDataValue('colaborators', colaborators.join())
+            }
         },
     },{
         timestamps: true,

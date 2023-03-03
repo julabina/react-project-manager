@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { decodeToken, isExpired } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Components/Header';
+import ProjectCard from '../Components/ProjectCard';
 
 const Home = () => {
 
@@ -11,9 +12,18 @@ const Home = () => {
     type Token = {version: string, content: string};
     type DecodedToken = {userId: string, token: Token};
     type UserInfo = {id: string, username: string};
+    type ProjectsInfos = {
+        colaborators: string[],
+        createdAt: string,
+        creator: string,
+        description: string,
+        id: string,
+        title: string,
+        updatedAt: string
+    };
 
     const [userInfo, setUserInfo] = useState<UserInfo>({id: "", username: ""});
-    const [projects, setProjects] = useState<string[]>([]);
+    const [projects, setProjects] = useState<ProjectsInfos[]>([]);
 
     useEffect(() => {
         if (localStorage.getItem('react_project_manager_token') !== null) {
@@ -53,13 +63,36 @@ const Home = () => {
                 const newObj: UserInfo = {
                     id: data.data.id,
                     username: data.data.username,
-                }
+                }               
 
-                if (data.data.projects !== "") {
-                    
+                if (data.data.projects[0] !== "") {                   
+                    getAllProjects(data.data.projects , token);
                 }
 
                 setUserInfo(newObj);
+            })
+    };
+
+    const getAllProjects = (projectsId: string[], token: string) => {
+
+        fetch(process.env.REACT_APP_API_URL + '/api/project/getProjects', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
+            },
+            method: 'POST',
+            body: JSON.stringify({ 
+                projectsId: projectsId 
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                
+                if (data.data) {   
+                    const projectsInf = data.data;
+                    setProjects(projectsInf);                
+                }
             })
     };
 
@@ -73,7 +106,7 @@ const Home = () => {
             {
                 projects?.length > 0 ?
                 projects.map(el => {
-                    return el;
+                    return <ProjectCard key={el.id} title={el.title} description={el.description} creator={el.creator} user={userInfo.id} />;
                 })
                 : 
                 <h3>Aucun projets.</h3>

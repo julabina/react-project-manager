@@ -34,7 +34,6 @@ const NewProject = () => {
                     userId: decodedToken.userId, 
                     token: token
                 };
-                console.log(newObj);                
 
                 setUserInfo(newObj);
             } else {
@@ -97,7 +96,6 @@ const NewProject = () => {
     };
 
     const createProject = () => {
-        console.log(userInfo.token);
         
         fetch(process.env.REACT_APP_API_URL + '/api/project/create', {
             headers: {
@@ -121,6 +119,8 @@ const NewProject = () => {
                 } else {
                     res.json()
                         .then(data => {
+                            console.log(data);
+                            
                             if (errorCont) {
                                 errorCont.innerHTML = `<p>- ` + data.message + `</p>`;
                             }
