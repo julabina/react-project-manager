@@ -106,7 +106,7 @@ const Home = () => {
             {
                 projects?.length > 0 ?
                 projects.map(el => {
-                    return <ProjectCard key={el.id} title={el.title} description={el.description} creator={el.creator} user={userInfo.id} />;
+                    return <ProjectCard key={el.id} title={el.title} description={el.description} creator={el.creator} user={userInfo.id} id={el.id} />;
                 })
                 : 
                 <h3>Aucun projets.</h3>

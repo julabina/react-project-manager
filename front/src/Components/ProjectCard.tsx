@@ -1,18 +1,26 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
     title: string, 
     description: string, 
     creator: string, 
     user: string, 
+    id: string
 };
 
 const ProjectCard = (props: Props) => {
+
+    const navigate = useNavigate();
 
     const [modalToggle, setModalToggle] = useState<boolean>(false);
 
     const toggleInfosModal = () => {
         setModalToggle(!modalToggle);
+    };
+
+    const goToProject = () => {
+        navigate('/project/' + props.id, { replace: true });
     };
 
     return (
@@ -30,6 +38,7 @@ const ProjectCard = (props: Props) => {
                     <button onClick={toggleInfosModal}>X</button>
                     <h1>{props.title}</h1>
                     <p>{props.description}</p>
+                    <button onClick={goToProject}>Ouvrir</button>
                 </div>
             </div>
         }

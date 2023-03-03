@@ -1,5 +1,5 @@
 const { v4 } = require('uuid');
-const { User, UserInfo } = require('../db/sequelize');
+const { User, UserInfo, Project } = require('../db/sequelize');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { ValidationError, UniqueConstraintError } = require('sequelize');
@@ -201,6 +201,47 @@ exports.getUserInfo = (req, res, next) => {
                 })
         })
         .catch(err => res.status(500).json({ message: err }))
+};
+
+exports.getUserInfos = (req, res, next) => {
+
+    Project.findOne({where: {id: req.params.id}})
+        .then(project => {
+            if (project === null) {
+                const message = "Aucun projet trouvé.";
+                return res.status(404).json({ message });
+            }
+            
+            const projectCollabs = project.colaborators;
+            
+            UserInfo.findAll({where: { userId: projectCollabs }})
+                .then(users => {
+                    if (users === null) {
+                        const message = "Aucun utilisateurs trouvés.";
+                        return res.status(404).json({ message });
+                    }
+
+                    let data = [];
+
+                    for (let i = 0; i < users.length; i++) {
+                        const userData = {
+                            id: users[i].userId,
+                            username: users[i].username ,
+                            firstname: users[i].firstname ,
+                            lastname: users[i].lastname
+                        }        
+                        
+                        data.push(userData);
+                    }
+
+                    const message = "Des utilisateurs ont bien été trouvés.";
+                    res.status(200).json({ message, data });
+
+                })
+                .catch(err => res.status(500).json({ message: err }))
+        })
+        .catch(err => res.status(500).json({ message: err }))
+
 };
 
 exports.getHomeUserInfo = (req, res, next) => {
