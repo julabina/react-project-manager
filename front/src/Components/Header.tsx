@@ -14,8 +14,10 @@ const Header = () => {
 
     return (
         <header className='header'>
-            <h1>TITRE</h1>
-            <Menu />
+            <section>
+                <h1>REACT PROJECT TRACKER</h1>
+                <Menu />
+            </section>
         </header>
     );
 };

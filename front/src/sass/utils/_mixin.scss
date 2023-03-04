@@ -6,13 +6,67 @@
         height: 100%;
         width: 100%;
         background: hsla(0, 0%, 0%, 0.767);
+        z-index: 10;
         &__container {
             position: absolute;
             top: 45%;
             left: 50%;
+            width: 80%;
             transform: translate(-50%, -50%);
             background: white;
             padding: 15px;
+            &__closeBtn {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+                border-radius: 50%;
+                border: 2px solid black;
+                height: 30px;width: 30px;
+                background: map-get($map: $colors, $key: light-white);
+                cursor: pointer;
+                transition: all 120ms ease-in-out;
+                &:hover {
+                    transition: all 120ms ease-in-out;
+                    background: map-get($map: $colors, $key: light-red);
+                }
+            }
+            &__openBtn {
+                padding: 10px 15px;
+                border: 2px solid map-get($map: $colors, $key: orange );
+                border-radius: 2px;
+                background: map-get($map: $colors, $key:light-white );
+                transition: all 120ms ease-in-out;
+                cursor: pointer;
+                &:hover {
+                    transition: all 120ms ease-in-out;
+                    border-color: map-get($map: $colors, $key:yellow );
+                    color: map-get($map: $colors, $key:yellow );
+                }
+            }
+            div {
+                display: flex;
+                justify-content: center;
+            }
+            h1 {
+                text-align: center;
+                margin-top: 30px;
+                font-weight: 500;
+                font-size: 1.4em;
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+            }
+            p {
+                margin: 60px 0 30px;
+                line-height: 1.4;
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+            }
         }
     }
 }

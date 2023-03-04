@@ -74,10 +74,16 @@ const Profil = () => {
             })
     };
 
+    const logout = () => {
+        localStorage.removeItem('react_project_manager_token');
+        navigate('/connexion', { replace: true });
+    };
+
     return (
         <>
         <Header />
-        <main>
+        <main className="profil">
+            <section className="profil__section">
             {
                 notFound ?
                 <h1>Aucun utilisateur trouvé.</h1>
@@ -89,6 +95,13 @@ const Profil = () => {
                 <p>Nom: {userInfo.lastname}</p>
                 </>
             }
+            {
+                params.id === undefined &&
+                <div className="profil__section__contLogout">
+                    <button className="profil__section__contLogout__logoutBtn" onClick={logout}>Se deconnecter</button>
+                </div>
+            }
+            </section>
         </main>
         </>
     );

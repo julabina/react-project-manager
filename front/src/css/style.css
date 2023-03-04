@@ -1,7 +1,104 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@import url("https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300;400;500;700&display=swap");
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+  color: initial;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  color: #11131a;
+}
+
 .projectCard {
-  border: 1px solid black;
-  width: 200px;
-  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 4px solid #34c8de;
+  border-radius: 3px;
+  width: 80%;
+  height: 50px;
+  margin-bottom: 15px;
+  height: 90px;
+  cursor: pointer;
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.137);
+  transition: all 120ms ease-in-out;
+}
+.projectCard:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #3febf4;
+  color: #3febf4;
+}
+.projectCard__title {
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+.projectCard__title::first-letter {
+  text-transform: uppercase;
+}
+.projectCard__my {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  background: #5fd788;
 }
 .projectCard__modal {
   position: fixed;
@@ -10,14 +107,69 @@
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.767);
+  z-index: 10;
 }
 .projectCard__modal__container {
   position: absolute;
   top: 45%;
   left: 50%;
+  width: 80%;
   transform: translate(-50%, -50%);
   background: white;
   padding: 15px;
+}
+.projectCard__modal__container__closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  border-radius: 50%;
+  border: 2px solid black;
+  height: 30px;
+  width: 30px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.projectCard__modal__container__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  background: #f0645a;
+}
+.projectCard__modal__container__openBtn {
+  padding: 10px 15px;
+  border: 2px solid #f87710;
+  border-radius: 2px;
+  background: #ffffff;
+  transition: all 120ms ease-in-out;
+  cursor: pointer;
+}
+.projectCard__modal__container__openBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #fbae18;
+  color: #fbae18;
+}
+.projectCard__modal__container div {
+  display: flex;
+  justify-content: center;
+}
+.projectCard__modal__container h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+.projectCard__modal__container h1::first-letter {
+  text-transform: uppercase;
+}
+.projectCard__modal__container p {
+  margin: 60px 0 30px;
+  line-height: 1.4;
+}
+.projectCard__modal__container p::first-letter {
+  text-transform: uppercase;
 }
 
 .collabInfos {
@@ -37,14 +189,154 @@
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.767);
+  z-index: 10;
 }
 .ticket__modal__container {
   position: absolute;
   top: 45%;
   left: 50%;
+  width: 80%;
   transform: translate(-50%, -50%);
   background: white;
   padding: 15px;
+}
+.ticket__modal__container__closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  border-radius: 50%;
+  border: 2px solid black;
+  height: 30px;
+  width: 30px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.ticket__modal__container__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  background: #f0645a;
+}
+.ticket__modal__container__openBtn {
+  padding: 10px 15px;
+  border: 2px solid #f87710;
+  border-radius: 2px;
+  background: #ffffff;
+  transition: all 120ms ease-in-out;
+  cursor: pointer;
+}
+.ticket__modal__container__openBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #fbae18;
+  color: #fbae18;
+}
+.ticket__modal__container div {
+  display: flex;
+  justify-content: center;
+}
+.ticket__modal__container h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+.ticket__modal__container h1::first-letter {
+  text-transform: uppercase;
+}
+.ticket__modal__container p {
+  margin: 60px 0 30px;
+  line-height: 1.4;
+}
+.ticket__modal__container p::first-letter {
+  text-transform: uppercase;
+}
+
+.header {
+  background: #7980ff;
+  display: flex;
+  justify-content: center;
+  height: 45px;
+  box-shadow: 10px 0 15px rgba(0, 0, 0, 0.644);
+  margin-bottom: 35px;
+}
+.header section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1200px;
+}
+.header section h1 {
+  font-family: "Righteous", cursive;
+}
+.header section nav ul {
+  display: flex;
+}
+.header section nav ul li {
+  margin-left: 15px;
+  transition: all 170ms ease-in-out;
+}
+.header section nav ul li:hover {
+  transition: all 170ms ease-in-out;
+  color: #ffffff;
+}
+
+.home {
+  display: flex;
+  justify-content: center;
+}
+.home__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1200px;
+}
+.home__section__mainTitle {
+  font-size: 2em;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.home__section__new {
+  display: flex;
+  justify-content: center;
+  margin: 100px 0 60px;
+}
+.home__section__new__link {
+  background: #f87710;
+  padding: 10px 20px;
+  border-radius: 2px;
+  transition: all 150ms ease-in-out;
+}
+.home__section__new__link:hover {
+  transition: all 150ms ease-in-out;
+  background: #fbae18;
+}
+.home__section__selectCont {
+  display: flex;
+  width: 80%;
+  margin: 20px 0 15px;
+}
+.home__section__selectCont select {
+  height: 30px;
+  border-radius: 2px;
+  border: 2px solid #34c8de;
+  background: #ffffff;
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.137);
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.home__section__selectCont select:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #3febf4;
+}
+.home__section__projectsCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .project__creator__form__error p {
@@ -57,14 +349,110 @@
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.767);
+  z-index: 10;
 }
 .project__newTicket__modal__container {
   position: absolute;
   top: 45%;
   left: 50%;
+  width: 80%;
   transform: translate(-50%, -50%);
   background: white;
   padding: 15px;
+}
+.project__newTicket__modal__container__closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  border-radius: 50%;
+  border: 2px solid black;
+  height: 30px;
+  width: 30px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.project__newTicket__modal__container__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  background: #f0645a;
+}
+.project__newTicket__modal__container__openBtn {
+  padding: 10px 15px;
+  border: 2px solid #f87710;
+  border-radius: 2px;
+  background: #ffffff;
+  transition: all 120ms ease-in-out;
+  cursor: pointer;
+}
+.project__newTicket__modal__container__openBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #fbae18;
+  color: #fbae18;
+}
+.project__newTicket__modal__container div {
+  display: flex;
+  justify-content: center;
+}
+.project__newTicket__modal__container h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+.project__newTicket__modal__container h1::first-letter {
+  text-transform: uppercase;
+}
+.project__newTicket__modal__container p {
+  margin: 60px 0 30px;
+  line-height: 1.4;
+}
+.project__newTicket__modal__container p::first-letter {
+  text-transform: uppercase;
+}
+
+.profil {
+  display: flex;
+  justify-content: center;
+}
+.profil__section {
+  width: 1200px;
+}
+.profil__section h1 {
+  font-size: 2.4em;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 150px;
+}
+.profil__section h1::first-letter {
+  text-transform: uppercase;
+}
+.profil__section p {
+  font-size: 1.2em;
+  line-height: 1.5;
+  text-align: center;
+}
+.profil__section__contLogout {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+.profil__section__contLogout__logoutBtn {
+  border: 3px solid #f0645a;
+  border-radius: 2px;
+  background: #ffffff;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.profil__section__contLogout__logoutBtn:hover {
+  transition: all 120ms ease-in-out;
+  background: #f0645a;
 }
 
 /*# sourceMappingURL=style.css.map */

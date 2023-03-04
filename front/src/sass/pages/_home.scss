@@ -1,0 +1,56 @@
+.home {
+    display: flex;
+    justify-content: center;
+    &__section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 1200px;
+        &__mainTitle {
+            font-size: 2em;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        &__new {
+            display: flex;
+            justify-content: center;
+            margin: 100px 0 60px;
+            
+            &__link {
+                background: map-get($map: $colors, $key:orange );
+                padding: 10px 20px;
+                border-radius: 2px;
+                transition: all 150ms ease-in-out;
+                &:hover {
+                    transition: all 150ms ease-in-out;
+                    background: map-get($map: $colors, $key:yellow );
+                }
+            }
+        }
+        &__selectCont {
+            display: flex;
+            width: 80%;
+            margin: 20px 0 15px;
+            select {
+                height: 30px;
+                border-radius: 2px;
+                border: 2px solid map-get($map: $colors, $key: pest);
+                background: map-get($map: $colors, $key:light-white );
+                box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.137);
+                cursor: pointer;
+                transition: all 120ms ease-in-out;
+                &:hover {
+                    transition: all 120ms ease-in-out;
+                    border-color: map-get($map: $colors, $key:ligth-pest );
+                }
+            }
+        }
+        &__projectsCont {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+    }
+}

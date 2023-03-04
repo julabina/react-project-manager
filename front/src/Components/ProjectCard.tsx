@@ -26,19 +26,21 @@ const ProjectCard = (props: Props) => {
     return (
         <>
         <article className="projectCard" onClick={toggleInfosModal}>
-            <h2>{props.title}</h2>
+            <h2 className="projectCard__title">{props.title}</h2>
             {
-                props.user === props.creator && <p>VOTRE PROJET</p>
+                props.user === props.creator && <div className="projectCard__my"></div>
             }
         </article>
         {
             modalToggle &&
             <div className="projectCard__modal">
                 <div className="projectCard__modal__container">
-                    <button onClick={toggleInfosModal}>X</button>
+                    <button className="projectCard__modal__container__closeBtn" onClick={toggleInfosModal}>X</button>
                     <h1>{props.title}</h1>
                     <p>{props.description}</p>
-                    <button onClick={goToProject}>Ouvrir</button>
+                    <div>
+                        <button className="projectCard__modal__container__openBtn" onClick={goToProject}>Ouvrir le projet</button>
+                    </div>
                 </div>
             </div>
         }

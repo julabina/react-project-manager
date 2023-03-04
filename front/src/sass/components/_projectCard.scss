@@ -1,5 +1,37 @@
 .projectCard {
-    border: 1px solid black;
-    width: 200px;height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 4px solid map-get($map: $colors, $key: pest);
+    border-radius: 3px;
+    width: 80%;
+    height: 50px;
+    margin-bottom: 15px;
+    height: 90px;
+    cursor: pointer;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.137);
+    transition: all 120ms ease-in-out;
+    &:hover {
+        transition: all 120ms ease-in-out;
+        border-color: map-get($map: $colors, $key:ligth-pest );
+        color: map-get($map: $colors, $key: ligth-pest);
+    }
+    &__title {
+        text-align: center;
+        font-size: 1.2em;
+        font-weight:500 ;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    &__my {
+        position: absolute;
+        top: 7px;
+        left: 7px;
+        height: 7px;width: 7px;
+        border-radius: 50%;
+        background: map-get($map: $colors, $key: sucess);
+    }
     @include modal;
 }

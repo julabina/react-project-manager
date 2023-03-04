@@ -1,0 +1,30 @@
+.header {
+    background: map-get($map: $colors, $key:primary );
+    display: flex;
+    justify-content: center;
+    height: 45px;
+    box-shadow: 10px 0 15px rgba(0, 0, 0, 0.644);
+    margin-bottom: 35px;
+    section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 1200px;
+        h1 {
+            font-family: 'Righteous', cursive;
+        }
+        nav {
+            ul {
+                display: flex;
+                li {
+                    margin-left: 15px;
+                    transition: all 170ms ease-in-out;
+                    &:hover {
+                        transition: all 170ms ease-in-out;
+                        color: map-get($map: $colors, $key:light-white );
+                    }
+                }
+            }
+        }
+    }
+}

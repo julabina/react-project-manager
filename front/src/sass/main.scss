@@ -1,8 +1,15 @@
 @import 'utils/variable';
 @import 'utils/mixin';
 
+@import 'base/reset';
+@import 'base/typo';
+
 @import 'components/projectCard';
 @import 'components/collabInfos';
 @import 'components/ticket';
 
+@import 'layout/header';
+
+@import 'pages/home';
 @import 'pages/project';
+@import 'pages/profil';
