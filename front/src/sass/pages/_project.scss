@@ -1,0 +1,14 @@
+.project {
+    &__creator {
+        &__form {
+            &__error {
+                p {
+                    @include errorMsg;
+                }
+            }
+        }
+    }
+    &__newTicket {
+        @include modal;
+    }
+}

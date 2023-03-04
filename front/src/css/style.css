@@ -17,11 +17,54 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
+  padding: 15px;
 }
 
 .collabInfos {
   border: 1px solid black;
   padding: 10px;
+}
+
+.ticket {
+  border: 1px solid black;
+  width: 200px;
+  height: 200px;
+}
+.ticket__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.767);
+}
+.ticket__modal__container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 15px;
+}
+
+.project__creator__form__error p {
+  color: #da0000;
+}
+.project__newTicket__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.767);
+}
+.project__newTicket__modal__container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 15px;
 }
 
 /*# sourceMappingURL=style.css.map */

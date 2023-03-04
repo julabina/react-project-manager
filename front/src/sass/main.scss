@@ -1,2 +1,8 @@
+@import 'utils/variable';
+@import 'utils/mixin';
+
 @import 'components/projectCard';
 @import 'components/collabInfos';
+@import 'components/ticket';
+
+@import 'pages/project';

@@ -3,7 +3,6 @@ const UserModel = require('../models/user');
 const UserInfoModel = require('../models/userInfo');
 const ProjectModel = require('../models/project');
 const TicketModel = require('../models/ticket');
-const CategoryModel = require('../models/category');
 
 const sequelize = new Sequelize(
     'react_project_manager',
@@ -29,8 +28,7 @@ const User = UserModel(sequelize, DataTypes);
 const UserInfo = UserInfoModel(sequelize, DataTypes);
 const Project = ProjectModel(sequelize, DataTypes);
 const Ticket = TicketModel(sequelize, DataTypes);
-const Category = CategoryModel(sequelize, DataTypes);
 
 module.exports = {  
-    User, UserInfo, Project, Ticket, Category
+    User, UserInfo, Project, Ticket
 };

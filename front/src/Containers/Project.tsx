@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { decodeToken, isExpired } from 'react-jwt';
 import { useNavigate, useParams } from 'react-router-dom';
 import Collab from '../Components/Collab';
+import Ticket from '../Components/Ticket';
 import Header from '../Components/Header';
 
 const Project = () => {
@@ -9,17 +10,24 @@ const Project = () => {
     const navigate = useNavigate();
     const params = useParams();
 
+    const errorCont = document.querySelector('.project__creator__form__error');
+
     type StoredToken = {version: string, content: string};
     type Token = {version: string, content: string};
     type DecodedToken = {userId: string, token: Token};
     type ProjectInfos = {title: string, description: string, colaborators: string[], creator: string};
     type CollabsInfos = {id: string, username: string, firstname: string, lastname: string};
+    type NewTaskInput = {title: string, description: string};
+    type Tickets = {id: string, title: string, description: string, creator: string, creatorName: string, status: string};
 
     const [projectInfos, setProjectInfos] = useState<ProjectInfos>({title: "", description: "", colaborators: [""], creator: ""});
     const [actualUser, setActualUser] = useState<DecodedToken>({ userId: "", token: {version: "", content: ""} });
     const [addCollabInput, setAddCollabInput] = useState<string>("");
     const [collabsInfos, setCollabsInfos] = useState<CollabsInfos[]>([]);
     const [projectId, setProjectId] = useState<string>("");
+    const [toggleTicketModal, setToggleTicketModal] = useState<boolean>(false);
+    const [ticketInput, setTicketInput] = useState<NewTaskInput>({title: "", description: ""});
+    const [tickets, setTickets] = useState<Tickets[]>([]);
 
     useEffect(() => {
 
@@ -88,6 +96,7 @@ const Project = () => {
                 if (collabs.length !== 0 && collabs[0] !== "") {
                     getCollabs(token);
                 }
+                getProjectTicket(token);
             })
     };
 
@@ -98,7 +107,6 @@ const Project = () => {
     const checkInput = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const errorCont = document.querySelector('.project__creator__form__error');
         if (errorCont) {
             errorCont.innerHTML = "";
             
@@ -114,8 +122,6 @@ const Project = () => {
     };
 
     const addCollab = () => {
-
-        const errorCont = document.querySelector('.project__creator__form__error');
 
         fetch(process.env.REACT_APP_API_URL + '/api/project/addCollab', {
             headers: {
@@ -169,6 +175,131 @@ const Project = () => {
 
     };
 
+    const ctrlTicketInput = (action: string, value: string) => {
+        if (action === "title") {
+            const newObj = {
+                ...ticketInput,
+                title: value
+            };
+            setTicketInput(newObj);
+        } else if (action === "description") {
+            const newObj = {
+                ...ticketInput,
+                description: value
+            };
+            setTicketInput(newObj);
+        }
+    };
+
+    const toggleModalTicket = () => {
+        setToggleTicketModal(!toggleTicketModal);
+    };
+
+    const verifyTicketForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const ticketErrorCont = document.querySelector('.project__newTicket__modal__container__form__errorCont');
+        
+        if (ticketErrorCont) {
+            ticketErrorCont.innerHTML = "";
+            let error = "";
+            
+            if (ticketInput.title === "") {
+                return ticketErrorCont.innerHTML = `<p>- Le titre est requis.</p>`;
+            } else if (ticketInput.title.length < 2 || ticketInput.title.length > 25) {
+                error = `<p>- Le titre doit etre compris entre 2 et 25 caractères.</p>`;
+            } else if (!ticketInput.title.match(/^[\wé èà\-]*$/i)) {
+                error = `<p>- le titre ne doit contenir que des lettres.</p>`;
+            }
+            
+            if (ticketInput.description !== "") {
+                
+                if (ticketInput.description.length < 2 || ticketInput.description.length > 100) {
+                    error += `<p>- La description doit etre comprise entre 2 et 100 caractères.</p>`;
+                } else if (!ticketInput.description.match(/^[\wé èà\-]*$/i)) {
+                    error += `<p>- la description ne doit contenir que des lettres.</p>`;
+                }
+            }
+            
+            if (error !== "") {
+                return ticketErrorCont.innerHTML = error;
+            }
+
+            createTicket();
+        }
+    };
+
+    const createTicket = () => {
+        const ticketErrorCont = document.querySelector('.project__newTicket__modal__container__form__errorCont');
+        if (ticketErrorCont) {
+            ticketErrorCont.innerHTML = "";
+        }
+
+        fetch(process.env.REACT_APP_API_URL + '/api/ticket/create', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + actualUser.token.version,
+            },
+            method: 'POST',
+            body: JSON.stringify({ 
+                projectId: params.id,
+                title: ticketInput.title,
+                description: ticketInput.description,
+                creator: actualUser.userId
+            })
+        })
+            .then(res => {
+                if (res.status === 201) {
+                    ticketInput.title = "";
+                    ticketInput.description = "";
+
+                    toggleModalTicket();
+                } else {
+                    res.json()
+                        .then(data => {
+                            if (data.message) {
+                                if (ticketErrorCont) {
+                                    ticketErrorCont.innerHTML = `` + data.message + ``;
+                                }
+                            }
+                        })
+                }
+            })
+    };
+
+    const getProjectTicket = (token: string) => {
+        fetch(process.env.REACT_APP_API_URL + '/api/ticket/getAll/' + params.id, {
+            headers : {
+                "Authorization": "Bearer " + token
+            },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.data && data.data.length > 0) {
+                    let ticketsData = [];
+
+                    for (let i = 0; i < data.data.length; i++) {
+
+
+                        const newObj: Tickets = {
+                            id: data.data[i].id, 
+                            title: data.data[i].title, 
+                            description: data.data[i].description, 
+                            creator: data.data[i].creator, 
+                            creatorName: data.data[i].creatorName,
+                            status: data.data[i].status
+                        };
+
+                        ticketsData.push(newObj);
+                    }
+
+                    setTickets(ticketsData);
+                }
+            })
+    };
+    
     return (
         <>
         <Header />
@@ -177,7 +308,8 @@ const Project = () => {
             <p>{projectInfos.description}</p>
             {
                 actualUser.userId === projectInfos.creator &&
-                <div>
+                <>
+                <section>
                     {
                         collabsInfos.length === 0 ? 
                             <h2>Pas encore de collaborateurs</h2>
@@ -200,8 +332,45 @@ const Project = () => {
                         <input onInput={(e) => ctrlInput((e.target as HTMLInputElement).value)} value={addCollabInput} type="text" name="" id="" />
                         <input type="submit" value="Ajouter" />
                     </form>
+                </section>
+                </>
+            }
+            <section>
+                <button onClick={toggleModalTicket}>Ajouter une tache</button>
+            </section>
+            {/* create modal start */}
+            {
+                toggleTicketModal &&
+                <div className='project__newTicket__modal'>
+                    <div className='project__newTicket__modal__container'>
+                        <button onClick={toggleModalTicket}>X</button>
+                        <h1>Créer une tache</h1>
+                        <form onSubmit={verifyTicketForm}>
+                            <div className="project__newTicket__modal__container__form__errorCont"></div>
+                            <div className="">
+                                <label htmlFor=""></label>
+                                <input onInput={(e) => ctrlTicketInput("title", (e.target as HTMLInputElement).value)} value={ticketInput.title} type="text" name="" id="" />
+                            </div>
+                            <div className="">
+                                <label htmlFor=""></label>
+                                <textarea onInput={(e) => ctrlTicketInput("description", (e.target as HTMLInputElement).value)} value={ticketInput.description} name="" id=""></textarea>
+                            </div>
+                            <input type="submit" value="Créer tache" />
+                        </form>
+                    </div>
                 </div>
             }
+            {/* create modal ended */}
+
+            <section>
+                {
+                    tickets.length === 0 ?
+                    <h2>Aucun ticket</h2> :
+                    tickets.map(el => {
+                        return <Ticket key={el.id} title={el.title} description={el.description} status={el.status} id={el.id} projectId={projectId} creatorName={el.creatorName} creator={el.creator} token={actualUser.token.version} />
+                    })
+                }
+            </section>
         </main>
         </>
     );
