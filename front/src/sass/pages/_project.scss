@@ -1,4 +1,7 @@
 .project {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     &__creator {
         &__form {
             &__error {
@@ -10,5 +13,14 @@
     }
     &__newTicket {
         @include modal;
+    }
+    &__notFound {
+        width: 1200px;
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 2.3em;
+            font-weight: 500;
+        }
     }
 }

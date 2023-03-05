@@ -1,9 +1,18 @@
+import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
+
+    const navigate = useNavigate();
+
+    const goHome = () => {
+        navigate('/', {replace : true});
+    };
+
     return (
-        <div>
+        <main className="notFound">
             <h1>404 Not found</h1>
-        </div>
+            <button onClick={goHome}>Retour</button>
+        </main>
     );
 };
 

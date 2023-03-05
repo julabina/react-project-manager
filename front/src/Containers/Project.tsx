@@ -28,6 +28,7 @@ const Project = () => {
     const [toggleTicketModal, setToggleTicketModal] = useState<boolean>(false);
     const [ticketInput, setTicketInput] = useState<NewTaskInput>({title: "", description: ""});
     const [tickets, setTickets] = useState<Tickets[]>([]);
+    const [notFound, setNotFound] = useState<boolean>(false);
 
     useEffect(() => {
 
@@ -71,32 +72,43 @@ const Project = () => {
             },
             method: 'GET'
         })
-            .then(res => res.json())
-            .then(data => {
+            .then(res => {
 
-                let collabs: string[] = [];
+                if (res.status === 200) {
+                    
+                    res.json()
+                        .then(data => {
 
-                if (data.data.colaborators && data.data.colaborators[0] !== "") {
-                    collabs = data.data.colaborators;
-                } 
-                
-                const newObj: ProjectInfos = {
-                    title: data.data.title ,
-                    description: data.data.description ,
-                    colaborators: collabs ,
-                    creator: data.data.creator
-                };
+                            let collabs: string[] = [];
 
-                if (userId !== undefined && !newObj.colaborators.includes(userId) && userId !== newObj.creator) {
-                    return navigate('/', { replace: true });
+                            if (data.data.colaborators && data.data.colaborators[0] !== "") {
+                                collabs = data.data.colaborators;
+                            } 
+                            
+                            const newObj: ProjectInfos = {
+                                title: data.data.title ,
+                                description: data.data.description ,
+                                colaborators: collabs ,
+                                creator: data.data.creator
+                            };
+
+                            if (userId !== undefined && !newObj.colaborators.includes(userId) && userId !== newObj.creator) {
+                                return navigate('/', { replace: true });
+                            }
+                            
+                            setProjectInfos(newObj);
+
+                            if (collabs.length !== 0 && collabs[0] !== "") {
+                                getCollabs(token);
+                            }
+                            getProjectTicket(token);
+                        })
+                } else if (res.status === 404) {
+                    setNotFound(true);
+                } else {
+                    navigate('/', {replace: true});
                 }
-                
-                setProjectInfos(newObj);
 
-                if (collabs.length !== 0 && collabs[0] !== "") {
-                    getCollabs(token);
-                }
-                getProjectTicket(token);
             })
     };
 
@@ -303,74 +315,83 @@ const Project = () => {
     return (
         <>
         <Header />
-        <main>
-            <h1>{projectInfos.title}</h1>
-            <p>{projectInfos.description}</p>
+        <main className='project'>
             {
-                actualUser.userId === projectInfos.creator &&
+                notFound ?
+                <div className="project__notFound">
+                    <h1>Aucun projet trouvé.</h1>
+                </div>
+                :
                 <>
+                <h1>{projectInfos.title}</h1>
+                <p>{projectInfos.description}</p>
+                {
+                    actualUser.userId === projectInfos.creator &&
+                    <>
+                    <section>
+                        {
+                            collabsInfos.length === 0 ? 
+                                <h2>Pas encore de collaborateurs</h2>
+                            :
+                                <>
+                                <h2>Liste des collaborateurs</h2>
+                                <ul>
+                                    {
+                                        params.id !== undefined &&
+                                        collabsInfos.map(el => {
+                                            return <Collab key={el.id} id={el.id} username={el.username} firstname={el.firstname} lastname={el.lastname} token={actualUser.token.version} projectId={projectId} function={getProjectInfo} />
+                                        })
+                                    }
+                                </ul>
+                                </>
+                        }
+                        <form onSubmit={checkInput}>
+                            <div className="project__creator__form__error"></div>
+                            <label htmlFor="">Ajouter email collaborateur</label>
+                            <input onInput={(e) => ctrlInput((e.target as HTMLInputElement).value)} value={addCollabInput} type="text" name="" id="" />
+                            <input type="submit" value="Ajouter" />
+                        </form>
+                    </section>
+                    </>
+                }
+                <section>
+                    <button onClick={toggleModalTicket}>Ajouter une tache</button>
+                </section>
+                {/* create modal start */}
+                {
+                    toggleTicketModal &&
+                    <div className='project__newTicket__modal'>
+                        <div className='project__newTicket__modal__container'>
+                            <button onClick={toggleModalTicket}>X</button>
+                            <h1>Créer une tache</h1>
+                            <form onSubmit={verifyTicketForm}>
+                                <div className="project__newTicket__modal__container__form__errorCont"></div>
+                                <div className="">
+                                    <label htmlFor=""></label>
+                                    <input onInput={(e) => ctrlTicketInput("title", (e.target as HTMLInputElement).value)} value={ticketInput.title} type="text" name="" id="" />
+                                </div>
+                                <div className="">
+                                    <label htmlFor=""></label>
+                                    <textarea onInput={(e) => ctrlTicketInput("description", (e.target as HTMLInputElement).value)} value={ticketInput.description} name="" id=""></textarea>
+                                </div>
+                                <input type="submit" value="Créer tache" />
+                            </form>
+                        </div>
+                    </div>
+                }
+                {/* create modal ended */}
+
                 <section>
                     {
-                        collabsInfos.length === 0 ? 
-                            <h2>Pas encore de collaborateurs</h2>
-                        :
-                            <>
-                            <h2>Liste des collaborateurs</h2>
-                            <ul>
-                                {
-                                    params.id !== undefined &&
-                                    collabsInfos.map(el => {
-                                        return <Collab key={el.id} id={el.id} username={el.username} firstname={el.firstname} lastname={el.lastname} token={actualUser.token.version} projectId={projectId} function={getProjectInfo} />
-                                    })
-                                }
-                            </ul>
-                            </>
+                        tickets.length === 0 ?
+                        <h2>Aucun ticket</h2> :
+                        tickets.map(el => {
+                            return <Ticket key={el.id} title={el.title} description={el.description} status={el.status} id={el.id} projectId={projectId} creatorName={el.creatorName} creator={el.creator} token={actualUser.token.version} />
+                        })
                     }
-                    <form onSubmit={checkInput}>
-                        <div className="project__creator__form__error"></div>
-                        <label htmlFor="">Ajouter email collaborateur</label>
-                        <input onInput={(e) => ctrlInput((e.target as HTMLInputElement).value)} value={addCollabInput} type="text" name="" id="" />
-                        <input type="submit" value="Ajouter" />
-                    </form>
                 </section>
                 </>
             }
-            <section>
-                <button onClick={toggleModalTicket}>Ajouter une tache</button>
-            </section>
-            {/* create modal start */}
-            {
-                toggleTicketModal &&
-                <div className='project__newTicket__modal'>
-                    <div className='project__newTicket__modal__container'>
-                        <button onClick={toggleModalTicket}>X</button>
-                        <h1>Créer une tache</h1>
-                        <form onSubmit={verifyTicketForm}>
-                            <div className="project__newTicket__modal__container__form__errorCont"></div>
-                            <div className="">
-                                <label htmlFor=""></label>
-                                <input onInput={(e) => ctrlTicketInput("title", (e.target as HTMLInputElement).value)} value={ticketInput.title} type="text" name="" id="" />
-                            </div>
-                            <div className="">
-                                <label htmlFor=""></label>
-                                <textarea onInput={(e) => ctrlTicketInput("description", (e.target as HTMLInputElement).value)} value={ticketInput.description} name="" id=""></textarea>
-                            </div>
-                            <input type="submit" value="Créer tache" />
-                        </form>
-                    </div>
-                </div>
-            }
-            {/* create modal ended */}
-
-            <section>
-                {
-                    tickets.length === 0 ?
-                    <h2>Aucun ticket</h2> :
-                    tickets.map(el => {
-                        return <Ticket key={el.id} title={el.title} description={el.description} status={el.status} id={el.id} projectId={projectId} creatorName={el.creatorName} creator={el.creator} token={actualUser.token.version} />
-                    })
-                }
-            </section>
         </main>
         </>
     );

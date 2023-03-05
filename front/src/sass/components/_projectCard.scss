@@ -14,8 +14,8 @@
     transition: all 120ms ease-in-out;
     &:hover {
         transition: all 120ms ease-in-out;
-        border-color: map-get($map: $colors, $key:ligth-pest );
-        color: map-get($map: $colors, $key: ligth-pest);
+        border-color: map-get($map: $colors, $key:light-pest );
+        color: map-get($map: $colors, $key: light-pest);
     }
     &__title {
         text-align: center;
