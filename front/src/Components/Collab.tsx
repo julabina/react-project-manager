@@ -27,15 +27,17 @@ const Collab = (props: Props) => {
                     props.function(props.token);
                 }
             })
-    }
+    };
 
     return (
         <li className="collabInfos">
-            <div className="">
+            <a href={'/user/' + props.id}><div className="collabInfos__infos">
                 <h3>{props.username}</h3>
                 <p>{props.lastname} {props.firstname}</p>
+            </div></a>
+            <div className="collabInfos__btnCont">
+                <button onClick={removeCollab}>Supprimer</button>
             </div>
-            <button onClick={removeCollab}>X</button>
         </li>
     );
 };

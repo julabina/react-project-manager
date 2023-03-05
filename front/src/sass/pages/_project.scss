@@ -2,13 +2,74 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    &__title {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 2.3em;
+        font-weight: 500;
+        &::first-letter {
+            text-transform: uppercase;
+        }       
+    }
+    &__description {
+        width: 900px;
+        margin: 50px 0 70px;
+        line-height: 1.4;
+        &::first-letter {
+            text-transform: uppercase;
+        }       
+    }
     &__creator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 1100px;
+        &__title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align:left;
+            width: 1100px;
+            &--notFound {
+                text-align: center;
+                margin-bottom: 50px;
+            }
+        }
         &__form {
+            display: flex;
+            flex-direction: column;
+            margin: 25px 0 40px;
+            width: 300px;
             &__error {
                 p {
                     @include errorMsg;
                 }
             }
+            label {
+                margin-bottom: 4px;
+            }
+            &__email {
+                height: 30px;
+                margin-bottom: 2px;
+                padding-left: 15px;
+            }
+            &__btn {
+                background: map-get($map: $colors, $key:light-white );
+                border: 3px solid map-get($map: $colors, $key:pest );
+                border-radius: 2px;
+                padding: 10px 0;
+                cursor: pointer;
+                transition: all 120ms ease-in-out;
+                &:hover {
+                    transition: all 120ms ease-in-out;
+                    border-color: map-get($map: $colors, $key: light-pest);
+                    color: map-get($map: $colors, $key: light-pest);
+                }
+            }
+        }
+        &__separator {
+            width: 100%;
+            border: 1px solid rgba(163, 163, 163, 0.178);
+            margin-bottom: 40px;
         }
     }
     &__newTicket {

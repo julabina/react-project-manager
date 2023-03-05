@@ -174,8 +174,48 @@ body {
 }
 
 .collabInfos {
-  border: 1px solid black;
-  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 50px;
+  box-shadow: 0 0px 15px rgba(0, 0, 0, 0.178);
+  margin-bottom: 5px;
+  transition: all 120ms ease-in-out;
+  width: 1000px;
+}
+.collabInfos:hover {
+  transition: all 120ms ease-in-out;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.178);
+}
+.collabInfos h3 {
+  font-weight: 500;
+}
+.collabInfos p {
+  font-weight: 300;
+}
+.collabInfos__infos {
+  cursor: pointer;
+  width: 900px;
+  padding: 15px 0;
+}
+.collabInfos__infos:hover {
+  transform: scale(0.99999);
+}
+.collabInfos__btnCont {
+  display: flex;
+  align-items: center;
+}
+.collabInfos__btnCont button {
+  background: #ffffff;
+  border: 3px solid #34c8de;
+  border-radius: 2px;
+  transition: all 120ms ease-in-out;
+  cursor: pointer;
+  height: 30px;
+}
+.collabInfos__btnCont button:hover {
+  transition: all 120ms ease-in-out;
+  color: #3febf4;
+  border-color: #3febf4;
 }
 
 .ticket {
@@ -346,8 +386,73 @@ body {
   flex-direction: column;
   align-items: center;
 }
+.project__title {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 2.3em;
+  font-weight: 500;
+}
+.project__title::first-letter {
+  text-transform: uppercase;
+}
+.project__description {
+  width: 900px;
+  margin: 50px 0 70px;
+  line-height: 1.4;
+}
+.project__description::first-letter {
+  text-transform: uppercase;
+}
+.project__creator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1100px;
+}
+.project__creator__title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: left;
+  width: 1100px;
+}
+.project__creator__title--notFound {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.project__creator__form {
+  display: flex;
+  flex-direction: column;
+  margin: 25px 0 40px;
+  width: 300px;
+}
 .project__creator__form__error p {
   color: #da0000;
+}
+.project__creator__form label {
+  margin-bottom: 4px;
+}
+.project__creator__form__email {
+  height: 30px;
+  margin-bottom: 2px;
+  padding-left: 15px;
+}
+.project__creator__form__btn {
+  background: #ffffff;
+  border: 3px solid #34c8de;
+  border-radius: 2px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.project__creator__form__btn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #3febf4;
+  color: #3febf4;
+}
+.project__creator__separator {
+  width: 100%;
+  border: 1px solid rgba(163, 163, 163, 0.178);
+  margin-bottom: 40px;
 }
 .project__newTicket__modal {
   position: fixed;

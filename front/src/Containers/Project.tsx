@@ -323,18 +323,18 @@ const Project = () => {
                 </div>
                 :
                 <>
-                <h1>{projectInfos.title}</h1>
-                <p>{projectInfos.description}</p>
+                <h1 className='project__title'>{projectInfos.title}</h1>
+                <p className='project__description'>{projectInfos.description}</p>
                 {
                     actualUser.userId === projectInfos.creator &&
                     <>
-                    <section>
+                    <section className='project__creator'>
                         {
                             collabsInfos.length === 0 ? 
-                                <h2>Pas encore de collaborateurs</h2>
+                                <h2 className='project__creator__title project__creator__title--notFound'>Pas encore de collaborateurs</h2>
                             :
                                 <>
-                                <h2>Liste des collaborateurs</h2>
+                                <h2 className='project__creator__title'>Liste des collaborateurs</h2>
                                 <ul>
                                     {
                                         params.id !== undefined &&
@@ -345,12 +345,13 @@ const Project = () => {
                                 </ul>
                                 </>
                         }
-                        <form onSubmit={checkInput}>
+                        <form className='project__creator__form' onSubmit={checkInput}>
                             <div className="project__creator__form__error"></div>
-                            <label htmlFor="">Ajouter email collaborateur</label>
-                            <input onInput={(e) => ctrlInput((e.target as HTMLInputElement).value)} value={addCollabInput} type="text" name="" id="" />
-                            <input type="submit" value="Ajouter" />
+                            <label htmlFor="addCollab">Adresse email du collaborateur</label>
+                            <input className='project__creator__form__email' onInput={(e) => ctrlInput((e.target as HTMLInputElement).value)} value={addCollabInput} type="email" id="addCollab" placeholder='user@mail.com' />
+                            <input className='project__creator__form__btn' type="submit" value="Ajouter collaborateur" />
                         </form>
+                        <div className='project__creator__separator'></div>
                     </section>
                     </>
                 }
