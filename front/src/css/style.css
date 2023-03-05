@@ -312,16 +312,17 @@ body {
 }
 .header section h1 {
   font-family: "Righteous", cursive;
+  cursor: pointer;
 }
 .header section nav ul {
   display: flex;
 }
 .header section nav ul li {
   margin-left: 15px;
-  transition: all 170ms ease-in-out;
+  transition: all 90ms ease-in-out;
 }
 .header section nav ul li:hover {
-  transition: all 170ms ease-in-out;
+  transition: all 90ms ease-in-out;
   color: #ffffff;
 }
 
@@ -426,7 +427,7 @@ body {
   width: 300px;
 }
 .project__creator__form__error p {
-  color: #da0000;
+  color: #f0645a;
 }
 .project__creator__form label {
   margin-bottom: 4px;
@@ -600,6 +601,126 @@ body {
   cursor: pointer;
 }
 .notFound button:hover {
+  transition: all 120ms ease-in-out;
+  color: #3febf4;
+  border-color: #3febf4;
+}
+
+.log {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+.log__login {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  height: 480px;
+}
+.log__login h2 {
+  position: absolute;
+  top: 10px;
+  font-size: 1.4em;
+  font-weight: 600;
+}
+.log__login__form {
+  width: auto;
+}
+.log__login__form__contDuo {
+  display: flex;
+}
+.log__login__form__inputCont {
+  display: flex;
+  flex-direction: column;
+}
+.log__login__form__inputCont label {
+  margin: 10px 0 3px;
+}
+.log__login__form__inputCont input {
+  height: 30px;
+  width: 200px;
+  margin: 0 10px 0 0;
+  padding-left: 10px;
+}
+.log__login__form__checkboxCont {
+  margin-top: 15px;
+}
+.log__login__form__btnCont {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.log__login__form__btnCont input {
+  border: 3px solid #34c8de;
+  border-radius: 2px;
+  background: #ffffff;
+  padding: 10px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.log__login__form__btnCont input:hover {
+  transition: all 120ms ease-in-out;
+  color: #3febf4;
+  border-color: #3febf4;
+}
+.log__signin {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  height: 480px;
+  border-left: 1px solid rgba(73, 73, 73, 0.171);
+}
+.log__signin h2 {
+  position: absolute;
+  top: 10px;
+  font-size: 1.4em;
+  font-weight: 600;
+}
+.log__signin__form {
+  width: auto;
+}
+.log__signin__form__contDuo {
+  display: flex;
+}
+.log__signin__form__inputCont {
+  display: flex;
+  flex-direction: column;
+}
+.log__signin__form__inputCont label {
+  margin: 10px 0 3px;
+}
+.log__signin__form__inputCont input {
+  height: 30px;
+  width: 200px;
+  margin: 0 10px 0 0;
+  padding-left: 10px;
+}
+.log__signin__form__checkboxCont {
+  margin-top: 15px;
+}
+.log__signin__form__btnCont {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.log__signin__form__btnCont input {
+  border: 3px solid #34c8de;
+  border-radius: 2px;
+  background: #ffffff;
+  padding: 10px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.log__signin__form__btnCont input:hover {
   transition: all 120ms ease-in-out;
   color: #3febf4;
   border-color: #3febf4;

@@ -129,7 +129,7 @@ const Home = () => {
                     <select onChange={(e) => filterProject((e.target as HTMLSelectElement).value)}>
                         <option value="all" selected>Tous</option>
                         <option value="my">Mes projets</option>
-                        <option value="other">Les autres</option>
+                        <option value="other">Autres</option>
                     </select>
                 </div>
                 <div className="home__section__projectsCont">

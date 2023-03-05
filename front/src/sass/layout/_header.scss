@@ -12,15 +12,16 @@
         width: 1200px;
         h1 {
             font-family: 'Righteous', cursive;
+            cursor: pointer;
         }
         nav {
             ul {
                 display: flex;
                 li {
                     margin-left: 15px;
-                    transition: all 170ms ease-in-out;
+                    transition: all 90ms ease-in-out;
                     &:hover {
-                        transition: all 170ms ease-in-out;
+                        transition: all 90ms ease-in-out;
                         color: map-get($map: $colors, $key:light-white );
                     }
                 }

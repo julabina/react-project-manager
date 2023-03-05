@@ -41,7 +41,7 @@
             width: 300px;
             &__error {
                 p {
-                    @include errorMsg;
+                    color: map-get($map: $colors, $key:light-red );
                 }
             }
             label {

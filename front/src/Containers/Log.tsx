@@ -285,7 +285,6 @@ const Log = () => {
                             <label htmlFor="logPassword">Mot de passe</label>
                             <input onInput={(e) => logControl('password', (e.target as HTMLInputElement).value)} value={logInput.password} type="password" id="logPassword" />
                         </div>
-                        <p className='log__form__resetPassword'>Mot de passe oublié</p>
                         <div className="log__login__form__btnCont">
                             <input type="submit" value="Connexion" />
                         </div>
@@ -299,29 +298,35 @@ const Log = () => {
                             <label htmlFor="signUsername">Pseudo</label>
                             <input onInput={(e) => signControl('username', (e.target as HTMLInputElement).value)} value={signInput.username} type="text" id="signUsername" placeholder='user10400' />
                         </div>
-                        <div className="log__signin__form__inputCont">
-                            <label htmlFor="signfirstname">Prénom</label>
-                            <input onInput={(e) => signControl('firstname', (e.target as HTMLInputElement).value)} value={signInput.firstname} type="text" id="signfirstname" placeholder='John' />
+                        <div className="log__signin__form__contDuo"> 
+                            <div className="log__signin__form__inputCont">
+                                <label htmlFor="signfirstname">Prénom</label>
+                                <input onInput={(e) => signControl('firstname', (e.target as HTMLInputElement).value)} value={signInput.firstname} type="text" id="signfirstname" placeholder='John' />
+                            </div>
+                            <div className="log__signin__form__inputCont">
+                                <label htmlFor="signlastname">Nom</label>
+                                <input onInput={(e) => signControl('lastname', (e.target as HTMLInputElement).value)} value={signInput.lastname} type="text" id="signlastname" placeholder='Doe' />
+                            </div>
                         </div>
-                        <div className="log__signin__form__inputCont">
-                            <label htmlFor="signlastname">Nom</label>
-                            <input onInput={(e) => signControl('lastname', (e.target as HTMLInputElement).value)} value={signInput.lastname} type="text" id="signlastname" placeholder='Doe' />
+                        <div className="log__signin__form__contDuo"> 
+                            <div className="log__signin__form__inputCont">
+                                <label htmlFor="signEmail">Email</label>
+                                <input onInput={(e) => signControl('mail', (e.target as HTMLInputElement).value)} value={signInput.mail} type="email" id="signEmail" placeholder='user@gmail.com' />
+                            </div>
+                            <div className="log__signin__form__inputCont">
+                                <label htmlFor="signConfirmEmail">Confirmer email</label>
+                                <input onInput={(e) => signControl('confirmMail', (e.target as HTMLInputElement).value)} value={signInput.confirmMail} type="email" id="signConfirmEmail" placeholder='user@gmail.com' />
+                            </div>
                         </div>
-                        <div className="log__signin__form__inputCont">
-                            <label htmlFor="signEmail">Email</label>
-                            <input onInput={(e) => signControl('mail', (e.target as HTMLInputElement).value)} value={signInput.mail} type="email" id="signEmail" placeholder='user@gmail.com' />
-                        </div>
-                        <div className="log__signin__form__inputCont">
-                            <label htmlFor="signConfirmEmail">Confirmer email</label>
-                            <input onInput={(e) => signControl('confirmMail', (e.target as HTMLInputElement).value)} value={signInput.confirmMail} type="email" id="signConfirmEmail" placeholder='user@gmail.com' />
-                        </div>
-                        <div className="log__signin__form__inputCont">
-                            <label htmlFor="signPassword">Mot de passe</label>
-                            <input onInput={(e) => signControl('password', (e.target as HTMLInputElement).value)} value={signInput.password} type="password" id="signPassword" />
-                        </div>
-                        <div className="log__signin__form__inputCont">
-                            <label htmlFor="signConfirm">Confirmer le mot de passe</label>
-                            <input onInput={(e) => signControl('confirmPassword', (e.target as HTMLInputElement).value)} value={signInput.confirmPassword} type="password" id="signConfirm" />
+                        <div className="log__signin__form__contDuo"> 
+                            <div className="log__signin__form__inputCont">
+                                <label htmlFor="signPassword">Mot de passe</label>
+                                <input onInput={(e) => signControl('password', (e.target as HTMLInputElement).value)} value={signInput.password} type="password" id="signPassword" />
+                            </div>
+                            <div className="log__signin__form__inputCont">
+                                <label htmlFor="signConfirm">Confirmer le mot de passe</label>
+                                <input onInput={(e) => signControl('confirmPassword', (e.target as HTMLInputElement).value)} value={signInput.confirmPassword} type="password" id="signConfirm" />
+                            </div>
                         </div>
                         <div className="log__signin__form__checkboxCont">
                             <input onInput={(e) => signControl('aggree', '')} value={signInput.aggree.toString()} type="checkbox" id="signCheck" />

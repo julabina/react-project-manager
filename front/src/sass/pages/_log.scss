@@ -1,0 +1,13 @@
+.log {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    &__login {
+        @include logForm;
+    }
+    &__signin {
+        @include logForm;
+        border-left: 1px solid rgba(73, 73, 73, 0.171);
+    }
+}
