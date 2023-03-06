@@ -132,21 +132,19 @@ const NewProject = () => {
     return (
         <>
         <Header />
-        <main>
+        <main className="newProject">
             <h1>Nouveau projet</h1>
             <div className="newProject__errorCont"></div>
             <form onSubmit={verifyInputs}>
-                <div>
+                <div className="newProject__inputCont">
                     <label htmlFor="">Titre</label>
                     <input onInput={(e) => ctrlInput("title", (e.target as HTMLInputElement).value)} value={formInput.title} type="text" name="" id="" />
                 </div>
-                <div className="">
+                <div className="newProject__inputCont">
                     <label htmlFor="">Description</label>
                     <textarea onInput={(e) => ctrlInput("description", (e.target as HTMLInputElement).value)} value={formInput.description} name="" id=""></textarea>
                 </div>
-                <div className="">
-                    <input type="submit" value="Créer" />
-                </div>
+                <input className="newProject__createBtn" type="submit" value="Créer" />
             </form>
         </main>
         </>

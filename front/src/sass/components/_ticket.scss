@@ -1,6 +1,27 @@
 .ticket {
-    border: 1px solid black;
-    width: 200px;
-    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 35px;
+    border: 2px solid map-get($map: $colors, $key:pest );
+    border-radius: 2px;
+    width: 900px;
+    height: 80px;
+    margin: 10px 0;
     @include modal;
+    select {
+        height: 30px;
+        border-radius: 2px;
+        border: 2px solid map-get($map: $colors, $key: pest);
+        background: map-get($map: $colors, $key:light-white );
+        box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.137);
+        cursor: pointer;
+        transition: all 120ms ease-in-out;
+        margin-top: 5px;
+        &:hover {
+            transition: all 120ms ease-in-out;
+            border-color: map-get($map: $colors, $key:light-pest );
+        }
+    }
 }

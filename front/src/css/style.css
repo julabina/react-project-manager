@@ -219,9 +219,16 @@ body {
 }
 
 .ticket {
-  border: 1px solid black;
-  width: 200px;
-  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 35px;
+  border: 2px solid #34c8de;
+  border-radius: 2px;
+  width: 900px;
+  height: 80px;
+  margin: 10px 0;
 }
 .ticket__modal {
   position: fixed;
@@ -294,6 +301,20 @@ body {
 }
 .ticket__modal__container p::first-letter {
   text-transform: uppercase;
+}
+.ticket select {
+  height: 30px;
+  border-radius: 2px;
+  border: 2px solid #34c8de;
+  background: #ffffff;
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.137);
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+  margin-top: 5px;
+}
+.ticket select:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #3febf4;
 }
 
 .header {
@@ -527,6 +548,45 @@ body {
 .project__newTicket__modal__container p::first-letter {
   text-transform: uppercase;
 }
+.project__newTicket__modal__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.project__newTicket__modal__container form {
+  width: 400px;
+  margin-top: 20px;
+}
+.project__newTicket__modal__container__form__inputCont {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.project__newTicket__modal__container__form__inputCont label {
+  margin-bottom: 3px;
+}
+.project__newTicket__modal__container__form__inputCont input {
+  width: 400px;
+  height: 30px;
+}
+.project__newTicket__modal__container__form__inputCont textarea {
+  width: 400px;
+  resize: vertical;
+}
+.project__newTicket__modal__container__form__btn {
+  border: 3px solid #34c8de;
+  border-radius: 2px;
+  background: #ffffff;
+  padding: 10px 25px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.project__newTicket__modal__container__form__btn:hover {
+  transition: all 120ms ease-in-out;
+  color: #3febf4;
+  border-color: #3febf4;
+}
 .project__notFound {
   width: 1200px;
 }
@@ -535,6 +595,25 @@ body {
   margin-top: 50px;
   font-size: 2.3em;
   font-weight: 500;
+}
+.project__addTaskBtn button {
+  border: 3px solid #34c8de;
+  border-radius: 2px;
+  background: #ffffff;
+  padding: 10px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.project__addTaskBtn button:hover {
+  transition: all 120ms ease-in-out;
+  color: #3febf4;
+  border-color: #3febf4;
+}
+.project__ticket__nothing {
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-top: 40px;
 }
 
 .profil {
@@ -601,6 +680,52 @@ body {
   cursor: pointer;
 }
 .notFound button:hover {
+  transition: all 120ms ease-in-out;
+  color: #3febf4;
+  border-color: #3febf4;
+}
+
+.newProject {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.newProject h1 {
+  font-size: 2em;
+  font-weight: 600;
+  margin-bottom: 45px;
+}
+.newProject form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.newProject__inputCont {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin-bottom: 15px;
+}
+.newProject__inputCont label {
+  margin-bottom: 3px;
+}
+.newProject__inputCont input {
+  height: 30px;
+}
+.newProject__inputCont textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+.newProject__createBtn {
+  border: 3px solid #34c8de;
+  border-radius: 2px;
+  background: #ffffff;
+  padding: 10px 25px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.newProject__createBtn:hover {
   transition: all 120ms ease-in-out;
   color: #3febf4;
   border-color: #3febf4;

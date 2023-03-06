@@ -219,7 +219,7 @@ const Project = () => {
                 return ticketErrorCont.innerHTML = `<p>- Le titre est requis.</p>`;
             } else if (ticketInput.title.length < 2 || ticketInput.title.length > 25) {
                 error = `<p>- Le titre doit etre compris entre 2 et 25 caractères.</p>`;
-            } else if (!ticketInput.title.match(/^[\wé èà\-]*$/i)) {
+            } else if (!ticketInput.title.match(/^[\wé èà\-\']*$/i)) {
                 error = `<p>- le titre ne doit contenir que des lettres.</p>`;
             }
             
@@ -227,7 +227,7 @@ const Project = () => {
                 
                 if (ticketInput.description.length < 2 || ticketInput.description.length > 100) {
                     error += `<p>- La description doit etre comprise entre 2 et 100 caractères.</p>`;
-                } else if (!ticketInput.description.match(/^[\wé èà\-]*$/i)) {
+                } else if (!ticketInput.description.match(/^[\wé èà\-\']*$/i)) {
                     error += `<p>- la description ne doit contenir que des lettres.</p>`;
                 }
             }
@@ -266,6 +266,7 @@ const Project = () => {
                     ticketInput.description = "";
 
                     toggleModalTicket();
+                    getProjectTicket(actualUser.token.version);
                 } else {
                     res.json()
                         .then(data => {
@@ -355,27 +356,30 @@ const Project = () => {
                     </section>
                     </>
                 }
-                <section>
+                <section className='project__addTaskBtn'>
                     <button onClick={toggleModalTicket}>Ajouter une tache</button>
                 </section>
+
                 {/* create modal start */}
                 {
                     toggleTicketModal &&
                     <div className='project__newTicket__modal'>
                         <div className='project__newTicket__modal__container'>
-                            <button onClick={toggleModalTicket}>X</button>
+                            <button className="project__newTicket__modal__container__closeBtn" onClick={toggleModalTicket}>X</button>
                             <h1>Créer une tache</h1>
                             <form onSubmit={verifyTicketForm}>
                                 <div className="project__newTicket__modal__container__form__errorCont"></div>
-                                <div className="">
-                                    <label htmlFor=""></label>
+                                <div className="project__newTicket__modal__container__form__inputCont">
+                                    <label htmlFor="">Titre</label>
                                     <input onInput={(e) => ctrlTicketInput("title", (e.target as HTMLInputElement).value)} value={ticketInput.title} type="text" name="" id="" />
                                 </div>
-                                <div className="">
-                                    <label htmlFor=""></label>
+                                <div className="project__newTicket__modal__container__form__inputCont">
+                                    <label htmlFor="">Description</label>
                                     <textarea onInput={(e) => ctrlTicketInput("description", (e.target as HTMLInputElement).value)} value={ticketInput.description} name="" id=""></textarea>
                                 </div>
-                                <input type="submit" value="Créer tache" />
+                                <div className="project__newTicket__modal__container__form__btnCont">
+                                    <input className='project__newTicket__modal__container__form__btn' type="submit" value="Créer tache" />
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -385,7 +389,7 @@ const Project = () => {
                 <section>
                     {
                         tickets.length === 0 ?
-                        <h2>Aucun ticket</h2> :
+                        <h2 className='project__ticket__nothing'>Aucune tache de créer</h2> :
                         tickets.map(el => {
                             return <Ticket key={el.id} title={el.title} description={el.description} status={el.status} id={el.id} projectId={projectId} creatorName={el.creatorName} creator={el.creator} token={actualUser.token.version} />
                         })

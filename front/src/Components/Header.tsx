@@ -15,7 +15,7 @@ const Header = () => {
     return (
         <header className='header'>
             <section>
-                <a href="/"><h1>REACT PROJECT TRACKER</h1></a>
+                <a href="/"><h1>REACT TASK MANAGER</h1></a>
                 <Menu />
             </section>
         </header>

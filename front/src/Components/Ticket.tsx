@@ -39,7 +39,6 @@ const Ticket = (props: Props) => {
                 <select name="" id="" value={status} onChange={(e) => changeStatus((e.target as HTMLSelectElement).value)}>
                     <option value="pending">Attente</option>
                     <option value="start">En cour</option>
-                    <option value="test">En test</option>
                     <option value="end">Terminée</option>
                 </select>
             </div>
